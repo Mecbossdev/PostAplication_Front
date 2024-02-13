@@ -6,8 +6,8 @@ import axios, { AxiosPromise } from "axios";
 const API_URL = "https://localhost:7201/api/Post"
 
 const fetchData = async () => {
-  const response = await axios.get("https://localhost:7201/api/Post");
-  return response.data;
+  const { data } = await axios.get("https://localhost:7201/api/Post");
+  return data.data as PostData[];
 }
 
 export function usePostData() {
@@ -19,6 +19,6 @@ export function usePostData() {
 
   return {
     ...query,
-    data: query?.data?.data
+    data: query?.data
   }
 }

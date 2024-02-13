@@ -2,16 +2,14 @@ import { PostData } from "@/interfaces/post-data";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:8000"
-
 const postData = async (data: PostData) => {
-  return await axios.post(API_URL + "/admin/auth/user/", data);
+  return await axios.post("https://localhost:7201/api/Post");
 }
 
 export function useUsersData() {
+  const queryClient = useQueryClient()
   const mutate = useMutation({
     mutationFn: postData,
-
   })
 
   return mutate;

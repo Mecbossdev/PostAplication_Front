@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 export interface IPostListProps {
 }
 
-export default function PostList(props: IPostListProps) {
+export default function PostList() {
   const [data, setData] = useState<PostData[]>([])
 
   const fetchData = async () => {
