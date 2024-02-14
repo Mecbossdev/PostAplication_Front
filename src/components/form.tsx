@@ -4,8 +4,9 @@ import { InputComponent } from "./input-component";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useUsersData } from "@/hooks/usePostMutate";
+import { postData, useMutatePost, } from "@/hooks/usePostMutate";
 import { useRouter } from "next/navigation";
+import { useQueryPost } from "@/hooks/usePostData";
 
 
 export interface IFormNewProps {
@@ -17,34 +18,17 @@ export default function FormNew (props: IFormNewProps) {
   const [error, setError] = useState("")
   const router = useRouter()
 
-  const submit = async () => {
-    try {
-      const data = {
-        name,
-        description,
-      };
+  const { mutate } = useMutatePost()
+  
 
-      const response = await fetch("https://localhost:7201/api/Post", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+  const submit =  () => {
 
-      if (response.ok) {
-        const responseData = await response.json();
+    const data = {
+      name,
+      description,
+    };
 
-        localStorage.setItem("token", responseData.token);
-
-        router.push("/listing/get");
-      } else {
-        setError("Falha na autenticação");
-        // console.error("Falha na autenticação");
-      }
-    } catch (error) {
-      console.error("Erro durante a autenticação", error);
-    }
+    mutate(data)
   };
 
   return (

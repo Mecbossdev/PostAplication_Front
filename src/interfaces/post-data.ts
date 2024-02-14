@@ -1,9 +1,9 @@
 export interface PostData {
-  id: number;
+  id?: number;
   name: string;
   description: string;
 }
 
 export interface PostResponse {
-  data: PostData[];
+  data: PostData;
 }

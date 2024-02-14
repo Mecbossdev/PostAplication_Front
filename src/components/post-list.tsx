@@ -1,31 +1,37 @@
 'use client'
 import { api } from '@/data/api';
-import { PostData } from '@/interfaces/post-data';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { fetchData, useQueryPost } from '@/hooks/usePostData';
+import { PostData, PostResponse } from '@/interfaces/post-data';
+import { Delete } from 'lucide-react';
+import { useState } from 'react';
+
 
 
 export interface IPostListProps {
 }
 
 export default function PostList() {
-  const [data, setData] = useState<PostData[]>([])
-
-  const fetchData = async () => {
-    const response = await axios.get("https://localhost:7201/api/Post")
-    return setData(response.data)
+  const [value, setValue] = useState<PostData[]>([])
+  const {data} = useQueryPost()
+  const handleDelete = (id: number) => {
+    const deleteItem = value.filter(item => {
+      return item.id !== id
+    })
+    setValue(deleteItem)
+    
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [])
 
   return (
     <div className='grid grid-cols-3 gap-4 p-4'>  
       {data?.map((data) => (
-        <ul key={data.id} className='flex flex-col p-4 border rounded-xl bg-sky-500 w-52'>
-          <li>{data.name}</li>
+        <ul key={data.id} className='flex flex-col p-4 border rounded-xl bg-sky-200 w-52'>
+          <li className='flex justify-between'>
+            {data.name}
+            <Delete className="cursor-pointer"/>
+          </li>
           <li className='text-xs'>{data.description}</li>
+          
         </ul>  
       ))}
     </div>

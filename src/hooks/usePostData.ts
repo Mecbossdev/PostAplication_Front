@@ -1,24 +1,20 @@
 'use client'
-import { PostData, PostResponse } from "@/interfaces/post-data";
+import { PostData } from "@/interfaces/post-data";
 import { useQuery } from "@tanstack/react-query";
-import axios, { AxiosPromise } from "axios";
+import axios from "axios";
 
-const API_URL = "https://localhost:7201/api/Post"
-
-const fetchData = async () => {
-  const { data } = await axios.get("https://localhost:7201/api/Post");
-  return data.data as PostData[];
+export const fetchData = async () => {
+  const data  = await axios.get("https://localhost:7201/api/Post");
+  const response = await data.data
+  return response as PostData[]
 }
 
-export function usePostData() {
+export function useQueryPost() {
   const query = useQuery({
     queryFn: fetchData,
-    queryKey: ['post-data']
-    
+    queryKey:["posts"]
   })
 
-  return {
-    ...query,
-    data: query?.data
-  }
+  return query
 }
+

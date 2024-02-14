@@ -1,42 +1,36 @@
 'use client'
 import { 
   Home, 
+  List, 
   LogOut,
   UserPlus,
 } 
   from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
-import Image from 'next/image'
+
 
 export function Nav() {
-  const [filterNav, setfilterNav] = useState<string>('')
-  const [open, setOpen] = useState<boolean>(true);
-  const [submenuOpen, setSubmenuOpen] = useState<boolean>(false);
   const inactiveLink = 'flex gap-4 mb-6 border-gray-600 transition ease-in-out delay-200 hover:border-purple-250 duration-150 ...';
   const activeLink = inactiveLink+' text-blue-700';
   const pathname = usePathname();
 
   return (
     <aside className=' p-6 text-gray-500 border'>
-      <div className="flex justify-center font-extrabold text-xl text-blue-500">
-        PostAplication
-      </div>
+
       <nav className='flex flex-col'>
-        <div className='text-sm mb-4 mt-4'></div>
+        <div className='font-extrabold text-xl text-blue-500 mb-4 mt-4'>
+          <p>PostAplication</p>
+        </div>
         <div className='mt-4 mb-8'>
-          <Link href={'/home'} className={pathname.includes('/home') ? activeLink : inactiveLink}>
-            <Home
-              className="ml-2"
-              size={22}
-            />
-            Inicial
-          </Link>
           <Link href={'/listing/get'} className={pathname.includes('/listing/get') ? activeLink : inactiveLink}>
-            <UserPlus size={22} className="ml-2"/>
+            <List size={22} className="ml-2"/>
             Listagem
-          </Link>          
+          </Link>
+          <Link href={'/listing/post'} className={pathname.includes('/listing/post') ? activeLink : inactiveLink}>
+            <UserPlus size={22} className="ml-2"/>
+            Novo post
+          </Link>             
         </div>
         
         <div className='fixed bottom-0'>
